@@ -2,8 +2,11 @@ const dialogue = document.getElementById('dialogue');
 const nameBox = document.getElementById('name');
 const choicesBox = document.getElementById('choices');
 const locationBox = document.getElementById('location-reveal');
+const body = document.body;
 
 let anger = 0;
+let stage = 0;
+
 let locationData = {
   country: "your country",
   city: "your city",
@@ -11,12 +14,6 @@ let locationData = {
   ip: "000.000.000.000"
 };
 
-// Fake IP generator
-function fakeIP() {
-  return Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.');
-}
-
-// Load actual location data
 fetch("https://ipapi.co/json/")
   .then(res => res.json())
   .then(data => {
@@ -25,73 +22,79 @@ fetch("https://ipapi.co/json/")
     locationData.ip = data.ip || fakeIP();
   });
 
-// Dialogue system
+function fakeIP() {
+  return Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.');
+}
+
+// Creepy question stages
 const stages = [
   {
-    text: "Do you believe in demons?",
-    choices: ["Yes", "No"]
+    text: "Do you think you are alive?",
+    choices: ["Yes", "No", "What?"]
   },
   {
-    text: "Do you fear being watched?",
-    choices: ["A little", "No", "Yes"]
+    text: "Have you ever felt watched in your sleep?",
+    choices: ["Yes", "No", "I'm not answering that"]
   },
   {
-    text: "Would you sell your soul?",
-    choices: ["No", "Maybe", "Absolutely"]
+    text: "Would you trade everything for knowledge?",
+    choices: ["Yes", "Never", "Depends"]
+  },
+  {
+    text: "You're lying. Why?",
+    choices: ["I'm not", "Screw you", "I'm scared"]
+  },
+  {
+    text: "Would you rather forget, or remember forever?",
+    choices: ["Forget", "Remember", "I don’t know"]
   },
   {
     text: "Why are you still here?",
-    choices: ["I'm curious", "You scare me", "Go away"]
+    choices: ["To learn", "For fun", "Curiosity"]
+  },
+  {
+    text: "What if I was inside your walls?",
+    choices: ["You're not", "Shut up", "..."]
   }
 ];
 
-let stage = 0;
-
-function advance(choiceText) {
-  anger += evaluateChoice(choiceText);
-  stage++;
-  checkAngerLevel();
-  if (stage < stages.length) {
-    showStage();
-  } else {
-    finalStage();
-  }
-}
-
-function evaluateChoice(text) {
-  if (text.includes("No") || text.includes("Go away")) return 1;
-  if (text.includes("Absolutely")) return 2;
-  return 0;
-}
-
 function showStage() {
-  dialogue.textContent = stages[stage].text;
+  const curr = stages[stage];
+  dialogue.textContent = curr.text;
   choicesBox.innerHTML = "";
-  stages[stage].choices.forEach(choice => {
-    const btn = document.createElement('button');
+  randomGlitch();
+
+  curr.choices.forEach(choice => {
+    const btn = document.createElement("button");
     btn.textContent = choice;
-    btn.className = 'choice-btn';
-    btn.onclick = () => advance(choice);
+    btn.className = "choice-btn";
+    btn.onclick = () => handleChoice(choice);
     choicesBox.appendChild(btn);
   });
 }
 
-function checkAngerLevel() {
-  if (anger === 1) {
-    locationBox.textContent = `You're in ${locationData.country}, aren't you?`;
-  } else if (anger === 2) {
-    locationBox.textContent = `I know your city too... ${locationData.city}`;
-  } else if (anger === 3) {
-    locationBox.textContent = `Your address? Something like: ${locationData.address}`;
-  } else if (anger >= 4) {
-    locationBox.textContent = `Your IP: ${locationData.ip} — I warned you.`;
+function handleChoice(text) {
+  if (text.toLowerCase().includes("no") || text.toLowerCase().includes("shut") || text.toLowerCase().includes("screw")) {
+    anger++;
   }
+
+  stage++;
+  reactToAnger();
+
+  if (stage >= stages.length) {
+    dialogue.textContent = "You've said enough. You cannot undo what's been done.";
+    choicesBox.innerHTML = "";
+    return;
+  }
+
+  showStage();
 }
 
-function finalStage() {
-  dialogue.textContent = "You’ve said too much. Now I come for you.";
-  choicesBox.innerHTML = "";
-}
-
-// Start game
-showStage();
+function reactToAnger() {
+  if (anger === 1) {
+    locationBox.textContent = `I see you're from ${locationData.country}...`;
+  } else if (anger === 2) {
+    locationBox.textContent = `And ${locationData.city}... Cozy place.`;
+  } else if (anger === 3) {
+    locationBox.textContent = `You're at ${locationData.address}. Why hide?`;
+  } else if (anger >= 4) {

@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  color: red;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+  transition: background 2s;
+}
+
+.disclaimer {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 15px;
+  border: 1px solid red;
+  z-index: 1000;
+}
+
+.location-message {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 1.2em;
+  z-index: 1000;
+}
+
+#demon {
+  position: absolute;
+  width: 100px;
+  height: auto;
+  pointer-events: none;
+  transition: transform 0.1s ease;
+  z-index: 999;
+}

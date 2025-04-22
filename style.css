@@ -10,15 +10,15 @@ body {
 
 #demon-container {
   position: absolute;
-  top: 10%;
-  right: 5%;
-  transform: translateY(-10%);
+  top: 0;
+  left: 50%;
+  transform: translateX(50%);
   z-index: 20;
   pointer-events: none;
 }
 
 #demon {
-  width: 350px;
+  width: 300px;
   height: auto;
   image-rendering: pixelated;
 }

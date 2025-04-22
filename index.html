@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Don't Look Away</title>
+  <title>??? Wants to Talk</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="disclaimer">
-    <h2>DISCLAIMER</h2>
-    <p>This game may access your location and display disturbing visuals. Not for the faint of heart.</p>
+  <div id="vn-box">
+    <div id="name">???</div>
+    <div id="dialogue">Hello, little soul... Care to play a game?</div>
+    <div id="choices"></div>
   </div>
 
-  <div class="location-message" id="locationMessage">
-    We see you are in <span id="city"></span>, <span id="country"></span>...
-  </div>
+  <div id="location-reveal"></div>
 
-  <img src="demon.png" alt="Demon" id="demon"/>
+  <img src="demon.png" id="demon" alt="Demon" />
 
   <script src="script.js"></script>
 </body>

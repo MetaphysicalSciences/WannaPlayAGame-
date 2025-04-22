@@ -1,40 +1,52 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: black;
-  font-family: 'Courier New', monospace;
+  background: black;
   color: white;
+  font-family: 'Courier New', monospace;
   overflow: hidden;
+  transition: background 0.3s;
+}
+
+#demon-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(50%);
+  z-index: 20;
+  pointer-events: none;
 }
 
 #demon {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  width: 180px;
+  width: 300px;
   height: auto;
-  z-index: 5;
+  image-rendering: pixelated;
 }
 
 #vn-box {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 700px;
   background: rgba(0, 0, 0, 0.85);
-  padding: 20px;
   border-top: 2px solid red;
+  padding: 20px;
   z-index: 10;
+  transition: all 0.3s ease;
 }
 
 #name {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: red;
+  margin-bottom: 10px;
 }
 
 #dialogue {
-  margin-top: 10px;
+  font-size: 1.1em;
+  line-height: 1.4em;
 }
 
 #choices {
@@ -45,11 +57,12 @@ body {
   background: transparent;
   border: 1px solid red;
   color: white;
-  padding: 10px;
-  margin-right: 10px;
+  padding: 10px 20px;
+  margin: 5px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
+
 .choice-btn:hover {
   background: red;
   color: black;
@@ -62,4 +75,14 @@ body {
   font-size: 1.2em;
   color: red;
   z-index: 999;
+}
+
+.glitch {
+  animation: glitch 0.15s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translateX(-1px); color: red; }
+  50% { transform: translateX(1px); color: white; }
+  100% { transform: translateX(-1px); color: red; }
 }
